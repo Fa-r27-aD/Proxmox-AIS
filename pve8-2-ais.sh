@@ -8,21 +8,27 @@ BLUE='\033[0;34m'
 CYAN='\033[0;36m'
 NC='\033[0m' # No Color
 
-# Function to add a new entry to /etc/hosts
+# Function to add or replace an entry in /etc/hosts
 add_entry() {
     echo -e "${YELLOW}Add or replace an entry in /etc/hosts${NC}"
-    echo "Enter the IP address:"
-    read ip_address
-    echo "Enter the hostname:"
-    read hostname
+    old_hostname=$(hostname)
+    read -p "Enter the new hostname [$old_hostname]: " new_hostname
+    new_hostname=${new_hostname:-$old_hostname}
 
-    # Replace the existing entry if it exists, or add a new entry
-    sudo sed -i "/$hostname/d" /etc/hosts  # Delete the existing entry, if any
-    echo "$ip_address $hostname" | sudo tee -a /etc/hosts > /dev/null
-    echo -e "${GREEN}Entry added or replaced: $ip_address $hostname${NC}"
+    read -p "Do you want to change the IP address? (y/n): " change_ip
 
-    # Display the new IP address
-    hostname --ip-address
+    if [[ $change_ip == "y" ]]; then
+        read -p "Enter the new IP address: " new_ip
+    fi
+
+    # Replace old entry with new entry in /etc/hosts
+    if [[ $change_ip == "y" ]]; then
+        sudo sed -i "s/^[0-9.]*[[:space:]]*$old_hostname[[:space:]]*$/$new_ip $new_hostname/g" /etc/hosts
+        echo -e "${GREEN}Changing hostname from $old_hostname to $new_hostname with new IP $new_ip in /etc/hosts...${NC}"
+    else
+        sudo sed -i "s/^\([0-9.]*[[:space:]]*\)$old_hostname\([[:space:]]*\)$/\1$new_hostname\2/g" /etc/hosts
+        echo -e "${GREEN}Changing hostname from $old_hostname to $new_hostname in /etc/hosts...${NC}"
+    fi
 }
 
 # Function to add Proxmox repository
