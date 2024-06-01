@@ -64,7 +64,7 @@ update_upgrade() {
 install_proxmox_kernel() {
     echo -e "${YELLOW}Install Proxmox default kernel${NC}"
     echo "Installing Proxmox default kernel..."
-    apt install proxmox-default-kernel
+    apt install proxmox-default-kernel -y
     echo -e "${GREEN}Proxmox default kernel installed.${NC}"
 }
 
