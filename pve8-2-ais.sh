@@ -29,6 +29,9 @@ add_entry() {
         sed -i "s/^\([0-9.]*[[:space:]]*\)$old_hostname\([[:space:]]*\)$/\1$new_hostname\2/g" /etc/hosts
         echo -e "${GREEN}Changing hostname from $old_hostname to $new_hostname in /etc/hosts...${NC}"
     fi
+    
+    # Display the new IP address
+    hostname --ip-address
 }
 
 # Function to add Proxmox repository
