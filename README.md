@@ -18,4 +18,4 @@ This script provides a simple menu-driven interface for automating the setup pro
 ## Notes
 
 This script is intended for users who have installed and set up Debian 12 and want to implement Proxmox.
-Ensure you have sudo privileges to run the script
+Ensure you have sudo privileges to run the script.
