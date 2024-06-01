@@ -20,7 +20,7 @@ add_entry() {
     if grep -q "$hostname" /etc/hosts; then
         echo -e "${RED}The hostname $hostname already exists in /etc/hosts.${NC}"
     else
-        echo "$ip_address $hostname" | sudo tee -a /etc/hosts > /dev/null
+        echo "$ip_address $hostname" | tee -a /etc/hosts > /dev/null
         echo -e "${GREEN}Entry added: $ip_address $hostname${NC}"
     fi
 
@@ -32,7 +32,7 @@ add_entry() {
 add_proxmox_repo() {
     echo -e "${YELLOW}Add Proxmox repository${NC}"
     echo "Adding Proxmox repository..."
-    echo "deb [arch=amd64] http://download.proxmox.com/debian/pve bookworm pve-no-subscription" | sudo tee /etc/apt/sources.list.d/pve-install-repo.list > /dev/null
+    echo "deb [arch=amd64] http://download.proxmox.com/debian/pve bookworm pve-no-subscription" | tee /etc/apt/sources.list.d/pve-install-repo.list > /dev/null
     echo -e "${GREEN}Proxmox repository added.${NC}"
 }
 
@@ -48,9 +48,9 @@ add_proxmox_gpg_key() {
 update_upgrade() {
     echo -e "${YELLOW}Update and upgrade packages${NC}"
     echo "Updating package lists..."
-    sudo apt update
+    apt update
     echo "Upgrading packages..."
-    sudo apt full-upgrade -y
+    apt full-upgrade -y
     echo -e "${GREEN}Package upgrade completed.${NC}"
 }
 
@@ -58,7 +58,7 @@ update_upgrade() {
 install_proxmox_kernel() {
     echo -e "${YELLOW}Install Proxmox default kernel${NC}"
     echo "Installing Proxmox default kernel..."
-    sudo apt install proxmox-default-kernel
+    apt install proxmox-default-kernel
     echo -e "${GREEN}Proxmox default kernel installed.${NC}"
 }
 
@@ -66,14 +66,14 @@ install_proxmox_kernel() {
 reboot_system() {
     echo -e "${YELLOW}Reboot system${NC}"
     echo "Rebooting the system..."
-    sudo systemctl reboot
+    systemctl reboot
 }
 
 # Function to install Proxmox VE and additional packages
 install_proxmox() {
     echo -e "${YELLOW}Install Proxmox VE, postfix, open-iscsi, and chrony${NC}"
     echo "Installing Proxmox VE, postfix, open-iscsi, and chrony..."
-    sudo apt install proxmox-ve postfix open-iscsi chrony -y
+    apt install proxmox-ve postfix open-iscsi chrony -y
     echo -e "${GREEN}Proxmox VE, postfix, open-iscsi, and chrony installed.${NC}"
 }
 
