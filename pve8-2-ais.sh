@@ -23,10 +23,10 @@ add_entry() {
 
     # Replace old entry with new entry in /etc/hosts
     if [[ $change_ip == "y" ]]; then
-        sudo sed -i "s/^[0-9.]*[[:space:]]*$old_hostname[[:space:]]*$/$new_ip $new_hostname/g" /etc/hosts
+        sed -i "s/^[0-9.]*[[:space:]]*$old_hostname[[:space:]]*$/$new_ip $new_hostname/g" /etc/hosts
         echo -e "${GREEN}Changing hostname from $old_hostname to $new_hostname with new IP $new_ip in /etc/hosts...${NC}"
     else
-        sudo sed -i "s/^\([0-9.]*[[:space:]]*\)$old_hostname\([[:space:]]*\)$/\1$new_hostname\2/g" /etc/hosts
+        sed -i "s/^\([0-9.]*[[:space:]]*\)$old_hostname\([[:space:]]*\)$/\1$new_hostname\2/g" /etc/hosts
         echo -e "${GREEN}Changing hostname from $old_hostname to $new_hostname in /etc/hosts...${NC}"
     fi
 }
