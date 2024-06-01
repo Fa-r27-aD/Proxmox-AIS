@@ -10,19 +10,16 @@ NC='\033[0m' # No Color
 
 # Function to add a new entry to /etc/hosts
 add_entry() {
-    echo -e "${YELLOW}Add a new entry to /etc/hosts${NC}"
+    echo -e "${YELLOW}Add or replace an entry in /etc/hosts${NC}"
     echo "Enter the IP address:"
     read ip_address
     echo "Enter the hostname:"
     read hostname
 
-    # Check if the entry already exists
-    if grep -q "$hostname" /etc/hosts; then
-        echo -e "${RED}The hostname $hostname already exists in /etc/hosts.${NC}"
-    else
-        echo "$ip_address $hostname" | tee -a /etc/hosts > /dev/null
-        echo -e "${GREEN}Entry added: $ip_address $hostname${NC}"
-    fi
+    # Replace the existing entry if it exists, or add a new entry
+    sudo sed -i "/$hostname/d" /etc/hosts  # Delete the existing entry, if any
+    echo "$ip_address $hostname" | sudo tee -a /etc/hosts > /dev/null
+    echo -e "${GREEN}Entry added or replaced: $ip_address $hostname${NC}"
 
     # Display the new IP address
     hostname --ip-address
