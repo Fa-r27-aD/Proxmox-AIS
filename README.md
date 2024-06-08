@@ -7,10 +7,10 @@ This script provides a simple menu-driven interface for automating the setup pro
 1. Run the script as the root user:
  
    ```bash
-   sudo bash -c "$(wget -qLO - https://raw.githubusercontent.com/Fa-r27-aD/Proxmox-AIS/main/pve8-2-ais.sh)"
+   bash -c "$(wget -qLO - https://raw.githubusercontent.com/Fa-r27-aD/Proxmox-AIS/main/pve8-2-ais.sh)"
    ```
    ```bash
-   sudo bash -c "$(curl -fsSL https://raw.githubusercontent.com/Fa-r27-aD/Proxmox-AIS/main/pve8-2-ais.sh)"
+   bash -c "$(curl -fsSL https://raw.githubusercontent.com/Fa-r27-aD/Proxmox-AIS/main/pve8-2-ais.sh)"
    ```
    
 2. Follow the on-screen instructions to select and execute actions.
